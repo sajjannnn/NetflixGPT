@@ -1,28 +1,62 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import validator from "../utilis/validator";
-// import type { emailValid } from "../utilis/mockData";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utilis/firebase";
+
+let para1: string = "";
+let para2: string = "";
 
 const Login = () => {
-  const [isSignin,setIsSignIn] = useState(false);
-  const [result,setResult] = useState<string | null>("")
+  const [isSignin, setIsSignIn] = useState(false);
+  const [message, setMessage] = useState<string | null>("");
 
-  const LoginType= () =>{
+  const LoginType = () => {
     setIsSignIn(!isSignin);
-  }
-  const email = useRef<HTMLInputElement | null>(null)
+  };
+  const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
 
-  const checkValidator = (e: React.FormEvent) =>{
+  const checkValidator = (e: React.FormEvent) => {
     e.preventDefault();
-    const para1 =email?.current?.value ?? '';
-    const para2 =password.current?.value ?? '';
-    setResult(validator(para1,para2));
+    para1 = email?.current?.value ?? "";
+    para2 = password.current?.value ?? "";
 
+    setMessage(validator(para1, para2));
     // console.log(email.current?.value);
     // console.log(password.current?.value);
-  }
- return (
+    if (message) return;
+
+    if (!isSignin) {
+      createUserWithEmailAndPassword(auth, para1, para2)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorCode + errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(auth, para1, para2)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorCode + errorMessage);
+        });
+    }
+  };
+
+  // } else {
+  // }
+  return (
     <div>
       <div>
         <Header />
@@ -34,13 +68,16 @@ const Login = () => {
           <div className="w-3/5 flex flex-col gap-7">
             <input className="p-3 px-4 bg-black border" ref={email} type="text" placeholder="Email Address" />
             <input className="p-3 px-4 bg-black border" ref={password} type="password" placeholder="Password" />
-            <p className="cursor-pointer" onClick={LoginType}> {isSignin ? "New To Netflix? Sign Up Now" : "Already have an account? Sign In"}</p>
+            <p>{message}</p>
           </div>
 
-          <button onClick={(e)=>checkValidator(e)} className="bg-red-700 rounded px-8 py-2 w-3/5 text-2xl font-bold">{isSignin ? "Sign In" : "Sign Up"}</button>
-            <p>{result}</p>
-
-
+          <button onClick={(e) => checkValidator(e)} className="bg-red-700 rounded px-8 py-2 w-3/5 text-2xl font-bold">
+            {isSignin ? "Sign In" : "Sign Up"}
+          </button>
+          <p className="cursor-pointer" onClick={LoginType}>
+            {" "}
+            {isSignin ? "New To Netflix? Sign Up Now" : "Already have an account? Sign In"}
+          </p>
         </form>
       </div>
     </div>
