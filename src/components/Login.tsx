@@ -1,26 +1,34 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import validator from "../utilis/validator";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utilis/firebase";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utilis/userSlice";
+import { useDispatch } from "react-redux";
 
 let para1: string = "";
 let para2: string = "";
+let para3: string = "";
 
 const Login = () => {
-  const [isSignin, setIsSignIn] = useState(false);
+  const [isSignin, setIsSignIn] = useState(true);
   const [message, setMessage] = useState<string | null>("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const LoginType = () => {
     setIsSignIn(!isSignin);
   };
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
+  const name = useRef<HTMLInputElement | null>(null);
 
   const checkValidator = (e: React.FormEvent) => {
     e.preventDefault();
     para1 = email?.current?.value ?? "";
     para2 = password.current?.value ?? "";
+    para3 = name.current?.value ?? "";
 
     setMessage(validator(para1, para2));
     // console.log(email.current?.value);
@@ -33,6 +41,19 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           console.log(user);
+          updateProfile(user, {
+            displayName: para3,
+            photoURL: "https://avatars.githubusercontent.com/u/192706234?v=4",
+          })
+            
+            .then(() => {
+                 const { uid, email, displayName,photoURL } = auth.currentUser;
+                  dispatch(addUser({ uid :uid , email : email , displayName :displayName , photoURL:photoURL}))
+             navigate("/browse");
+            })
+            .catch((error) => {
+              setMessage(error.message);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -66,6 +87,7 @@ const Login = () => {
         <form className="z-6 flex h-2/4 w-1/4 flex-col items-center justify-center gap-10 bg-black/70">
           <h1 className="font-bold text-5xl"> {isSignin ? "Sign In" : "Sign Up"} </h1>
           <div className="w-3/5 flex flex-col gap-7">
+            {!isSignin && <input className="p-3 px-4 bg-black border" ref={name} type="text" placeholder="Name" />}
             <input className="p-3 px-4 bg-black border" ref={email} type="text" placeholder="Email Address" />
             <input className="p-3 px-4 bg-black border" ref={password} type="password" placeholder="Password" />
             <p>{message}</p>
