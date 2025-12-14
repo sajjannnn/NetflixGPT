@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utilis/userSlice";
 import { LOGO } from "../utilis/contants";
+import { type RootState } from "../utilis/appStore";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Header = () => {
 
     return unsubscribe
   }, []);
-  const user = useSelector((store) => store.user)
+  const user = useSelector((store: RootState) => store.user)
   const handleSignOut = () => {
     signOut(auth).then(() => {
   // Sign-out successful.
