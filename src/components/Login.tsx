@@ -3,7 +3,6 @@ import Header from "./Header";
 import validator from "../utilis/validator";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utilis/firebase";
-import { useNavigate } from "react-router-dom";
 import { addUser } from "../utilis/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -14,7 +13,6 @@ let para3: string = "";
 const Login = () => {
   const [isSignin, setIsSignIn] = useState(true);
   const [message, setMessage] = useState<string | null>("");
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const LoginType = () => {
@@ -49,7 +47,6 @@ const Login = () => {
             .then(() => {
                  const { uid, email, displayName,photoURL } = auth.currentUser;
                   dispatch(addUser({ uid :uid , email : email , displayName :displayName , photoURL:photoURL}))
-             navigate("/browse");
             })
             .catch((error) => {
               setMessage(error.message);

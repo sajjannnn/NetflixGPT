@@ -1,17 +1,32 @@
 import {auth} from "../utilis/firebase";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addUser, removeUser } from "../utilis/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+    useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName,photoURL } = user;
+        dispatch(addUser({ uid :uid , email : email , displayName :displayName , photoURL:photoURL}))
+        navigate("/browse")
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
   const user = useSelector((store) => store.user)
   const handleSignOut = () => {
     signOut(auth).then(() => {
   // Sign-out successful.
-  navigate("/");
   
-}).catch((_error) => {
+}).catch((error) => {
   // An error happened.
   navigate("/error")
 });
