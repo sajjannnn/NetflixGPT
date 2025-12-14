@@ -4,12 +4,13 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utilis/userSlice";
+import { LOGO } from "../utilis/contants";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
     useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName,photoURL } = user;
         dispatch(addUser({ uid :uid , email : email , displayName :displayName , photoURL:photoURL}))
@@ -20,6 +21,8 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    return unsubscribe
   }, []);
   const user = useSelector((store) => store.user)
   const handleSignOut = () => {
@@ -33,7 +36,7 @@ const Header = () => {
   }
   return (
     <div className="flex justify-between absolute w-full px-6 py-2 bg-gradient-to-b from-black z-10">
-      <img className="h-44" src="https://images.ctfassets.net/y2ske730sjqp/6bhPChRFLRxc17sR8jgKbe/6fa1c6e6f37acdc97ff635cf16ba6fb3/Logos-Readability-Netflix-logo.png" alt="" />
+      <img className="h-44" src={LOGO} alt="" />
      {user && <div className="flex items-center">
         <img className="h-10" src= {user.photoURL} alt="profileIcon" />
         <button className=" font-bold text-white z-7 text-xl" onClick={handleSignOut}>Sign out </button>

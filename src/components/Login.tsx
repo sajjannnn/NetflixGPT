@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from "../utilis/firebase";
 import { addUser } from "../utilis/userSlice";
 import { useDispatch } from "react-redux";
+import { USER_AVATAR } from "../utilis/contants";
 
 let para1: string = "";
 let para2: string = "";
@@ -41,7 +42,7 @@ const Login = () => {
           console.log(user);
           updateProfile(user, {
             displayName: para3,
-            photoURL: "https://avatars.githubusercontent.com/u/192706234?v=4",
+            photoURL: USER_AVATAR,
           })
             
             .then(() => {
