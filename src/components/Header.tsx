@@ -36,7 +36,7 @@ const Header = () => {
 });
   }
   return (
-    <div className="flex justify-between absolute w-full px-6 py-2 bg-gradient-to-b from-black z-10">
+    <div className="flex justify-between absolute w-full px-6  bg-gradient-to-b from-black z-10">
       <img className="h-44" src={LOGO} alt="" />
      {user && <div className="flex items-center">
         <img className="h-10" src= {user.photoURL} alt="profileIcon" />
