@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from "../utilis/firebase";
 import { addUser } from "../utilis/userSlice";
 import { useDispatch } from "react-redux";
-import { USER_AVATAR } from "../utilis/contants";
+import { BG_URL, USER_AVATAR } from "../utilis/contants";
 
 let para1: string = "";
 let para2: string = "";
@@ -79,7 +79,7 @@ const Login = () => {
     <div>
       <div>
         <Header />
-        <img className="absolute h-full w-full" src="https://assets.nflxext.com/ffe/siteui/vlv3/29b665f6-0a62-4745-b9c2-f617fb7eadc6/web/IN-en-20251208-TRIFECTA-perspective_c78aea89-8f13-4e2c-ba7a-f9b40f53bf8c_medium.jpg" alt="" />
+        <img className="absolute h-full w-full" src={BG_URL} alt="" />
       </div>
       <div className="h-full w-full text-white absolute z-5 flex  justify-center items-center">
         <form className="z-6 flex h-2/4 w-1/4 flex-col items-center justify-center gap-10 bg-black/70">
