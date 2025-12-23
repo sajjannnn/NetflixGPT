@@ -6,13 +6,14 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization: "Bearer " + (process.env.REACT_APP_TMDB_KEY ?? ""),
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTk2ZmIxZTk2Y2E1NmJiMTZhYWY4OTAwMmY1ZmEwYyIsIm5iZiI6MTc2NTcwOTg5Ni45NDksInN1YiI6IjY5M2U5ODQ4NTA5NWFmMDhhOGY3ODY0MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0PTXPbkEPkbvqbpjOJqGD1eBewBi91n1mP_yJ3rmEfQ",
   },
 };
 
 export const CDN_ImgUrl = "https://image.tmdb.org/t/p/w500/";
 
-export const BG_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/29b665f6-0a62-4745-b9c2-f617fb7eadc6/web/IN-en-20251208-TRIFECTA-perspective_c78aea89-8f13-4e2c-ba7a-f9b40f53bf8c_medium.jpg";
+export const BG_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/29b665f6-0a62-4745-b9c2-f617fb7eadc6/web/IN-en-20251208-TRIFECTA-perspective_c78aea89-8f13-4e2c-ba7a-f9b40f53bf8c_medium.jpg"
 
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
@@ -20,4 +21,5 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
 
-export const GROQ_KEY = process.env.REACT_APP_GROQ_API;
+
+export const GROQ_KEY = "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";
