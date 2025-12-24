@@ -4,7 +4,7 @@ const MoviesList = ({ title, moviesCardList}: { title: string ,moviesCardList: s
   // console.log(moviesCardList);
   return (
     <div className="pb-16 ">
-      <h1 className="text-4xl">{title}</h1>
+      <h1 className="text-xl md:text-4xl">{title}</h1>
       <div className="flex flex-nowrap overflow-x-scroll">
         {moviesCardList?.map((card) => {
           return <MovieCard key={card.id} posterPath={card.poster_path} />;

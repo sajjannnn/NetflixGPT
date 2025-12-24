@@ -79,19 +79,19 @@ const Login = () => {
     <div>
       <div>
         <Header />
-        <img className="absolute h-full w-full" src={BG_URL} alt="" />
+        <img className="absolute h-full w-full object-cover md:object-center" src={BG_URL} alt="" />
       </div>
       <div className="h-full w-full text-white absolute z-5 flex  justify-center items-center">
-        <form className="z-6 flex h-2/4 w-1/4 flex-col items-center justify-center gap-10 bg-black/70">
-          <h1 className="font-bold text-5xl"> {isSignin ? "Sign In" : "Sign Up"} </h1>
-          <div className="w-3/5 flex flex-col gap-7">
+        <form className="z-6 flex h-2/4 w-11/12 md:w-1/4 flex-col items-center justify-center gap-4 md:gap-10 bg-black/70">
+          <h1 className="font-bold text-2xl md:text-5xl"> {isSignin ? "Sign In" : "Sign Up"} </h1>
+          <div className="w-3/5 flex flex-col gap-4 md:gap-7">
             {!isSignin && <input className="p-3 px-4 bg-black border" ref={name} type="text" placeholder="Name" />}
             <input className="p-3 px-4 bg-black border" ref={email} type="text" placeholder="Email Address" />
             <input className="p-3 px-4 bg-black border" ref={password} type="password" placeholder="Password" />
             <p>{message}</p>
           </div>
 
-          <button onClick={(e) => checkValidator(e)} className="bg-red-700 rounded px-8 py-2 w-3/5 text-2xl font-bold">
+          <button onClick={(e) => checkValidator(e)} className="bg-red-700 rounded px-8 py-2 w-3/5 md:text-2xl font-bold">
             {isSignin ? "Sign In" : "Sign Up"}
           </button>
           <p className="cursor-pointer" onClick={LoginType}>

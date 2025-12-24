@@ -49,12 +49,12 @@ const Header = () => {
     dispatch(gptSearchToggle());
   };
   return (
-    <div className="flex justify-between absolute w-full px-6  bg-gradient-to-b from-black z-100">
-      <img className="h-44" src={LOGO} alt="" />
+    <div className="flex flex-col md:flex-row justify-between absolute w-full px-6  bg-gradient-to-b from-black z-100">
+      <img className="h-24 sm:h-44 mx-auto md:mx-0" src={LOGO} alt="" />
       {user && (
-        <div className="flex items-center">
+        <div className="flex justify-between items-center ">
           {gptSearch && (
-            <select className="p-2 m-2 bg-gray-900 text-white" onChange={handleLanguageChange}>
+            <select className=" p-1 m-1 md:p-2 md:m-2 bg-gray-900 text-white" onChange={handleLanguageChange}>
               {SUPPORTED_LANGUAGES.map((lang) => (
                 <option key={lang.identifier} value={lang.identifier}>
                   {lang.name}
@@ -63,14 +63,15 @@ const Header = () => {
             </select>
           )}
 
-          <button className="bg-red-800 text-white text-3xl p-2 px-4 rounded-2xl m-4" onClick={gptSearchHandler}>
+          <button className="bg-red-800 text-white sm:text-3xl p-1 sm:p-2 px-4 rounded-2xl m-4" onClick={gptSearchHandler}>
             {!gptSearch ? "GPT Search" : "Home"}
           </button>
-
-          <img className="h-10" src={user.photoURL} alt="profileIcon" />
-          <button className=" font-bold text-white z-7 text-xl" onClick={handleSignOut}>
-            Sign out{" "}
-          </button>
+          <div className="flex">
+            <img className="sm:h-10" src={user.photoURL} alt="profileIcon" />
+            <button className=" font-bold text-white z-7 text-xl" onClick={handleSignOut}>
+              Sign out{" "}
+            </button>
+          </div>
         </div>
       )}
     </div>
