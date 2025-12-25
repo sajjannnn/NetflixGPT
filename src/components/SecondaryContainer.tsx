@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import MoviesList from "./MoviesList";
+import type { RootState } from "../utilis/appStore";
 
 const SecondaryContainer = () => {
-  const moviesList = useSelector((store) => store.movies);
+  const moviesList = useSelector((store:RootState) => store.movies);
 
   return (
     <div>

@@ -12,7 +12,7 @@ import { changeLanguage } from "../utilis/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const gptSearch = useSelector((store) => store.gpt.gptSearch);
+  const gptSearch = useSelector((store:RootState) => store.gpt.gptSearch);
 
   const handleLanguageChange = (e) => {
     dispatch(changeLanguage(e.target.value));

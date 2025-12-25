@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import VideoBackground from "./VideoBackground";
 import VideoTItle from "./VideoTItle";
+import type { RootState } from "../utilis/appStore";
 
 const MainContainer = () => {
-    const movies = useSelector((store)=>store.movies.nowPlayingMovies)
+    const movies = useSelector((store:RootState)=>store.movies.nowPlayingMovies)
     console.log(movies);
     if(movies == null){ return <div>Loading...</div>};
 

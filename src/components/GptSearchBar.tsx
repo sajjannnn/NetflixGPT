@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { API_OPTIONS } from "../utilis/contants";
 import { addGptMoviesResult } from "../utilis/gptSlice";
 import groq from "../utilis/openai";
+import type { AppDispatch, RootState } from "../utilis/appStore";
 
 const GptSearchBar = () => {
-  const dispatch = useDispatch();
-  const langKey = useSelector((store) => store.config.lang);
+  const dispatch = useDispatch<AppDispatch>();
+  const langKey = useSelector((store:RootState) => store.config.lang);
   const searchText = useRef(null);
   const gptQuery =
     "Act as a movie reccomendation system and suggest some movies for the query" +

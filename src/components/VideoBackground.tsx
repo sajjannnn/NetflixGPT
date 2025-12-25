@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import useTrailerVideo from "../hooks/useTrailerVideo";
+import type { RootState } from "../utilis/appStore";
 
 const VideoBackground = ({moviesId}: {moviesId:string}) => {
   useTrailerVideo({moviesId});
-  const movie_Id = useSelector((store) => store.movies?.trailerVideo);
+  const movie_Id = useSelector((store:RootState) => store.movies?.trailerVideo);
   return (
     <div className="w-full">
       <iframe
