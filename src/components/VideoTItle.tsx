@@ -1,4 +1,4 @@
-const VideoTItle = ({ title, overview }) => {
+const VideoTItle = ({ title, overview }: { title: string; overview: string }) => {
   return (
     <div className="w-screen aspect-video text-white bg-gradient-to-r from-black/50 z-10 absolute">
       <div className="pl-4 pt-35 md:pt-0 md:pl-20 md:flex md:flex-col justify-center h-svh md:w-1/3  ">

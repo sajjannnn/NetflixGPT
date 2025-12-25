@@ -46,8 +46,11 @@ const Login = () => {
           })
             
             .then(() => {
-                 const { uid, email, displayName,photoURL } = auth.currentUser;
-                  dispatch(addUser({ uid :uid , email : email , displayName :displayName , photoURL:photoURL}))
+                 const currentUser = auth.currentUser;
+                 if (currentUser) {
+                   const { uid, email, displayName, photoURL } = currentUser;
+                   dispatch(addUser({ uid: uid, email: email || "", displayName: displayName || "", photoURL: photoURL || "" }))
+                 }
             })
             .catch((error) => {
               setMessage(error.message);

@@ -6,9 +6,11 @@ import { addGptMoviesResult } from "../utilis/gptSlice";
 import groq from "../utilis/openai";
 import type { AppDispatch, RootState } from "../utilis/appStore";
 
+type LangKey = keyof typeof lang;
+
 const GptSearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const langKey = useSelector((store: RootState) => store.config.lang);
+  const langKey = useSelector((store: RootState) => store.config.lang) as LangKey;
   const searchText = useRef<HTMLInputElement>(null);
 
   const getGroqChatCompletion = () => {
@@ -34,6 +36,7 @@ const GptSearchBar = () => {
     const gptMovies = chatCompletion.choices[0]?.message?.content?.split(",").map((m) => m.trim());
 
     const promiseArray = gptMovies?.map((movie) => searchMovieTMDB(movie));
+    if (!promiseArray) return;
     const tmdbResults = await Promise.all(promiseArray);
     dispatch(addGptMoviesResult({ moviesName: gptMovies, moviesResult: tmdbResults }));
 

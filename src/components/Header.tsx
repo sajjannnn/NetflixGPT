@@ -14,7 +14,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const gptSearch = useSelector((store:RootState) => store.gpt.gptSearch);
 
-  const handleLanguageChange = (e) => {
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(changeLanguage(e.target.value));
   };
 
@@ -22,7 +22,7 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+        dispatch(addUser({ uid: uid, email: email || null, displayName: displayName || null, photoURL: photoURL || null }));
         navigate("/browse");
       } else {
         // User is signed out
@@ -67,7 +67,7 @@ const Header = () => {
             {!gptSearch ? "GPT Search" : "Home"}
           </button>
           <div className="flex">
-            <img className="sm:h-10" src={user.photoURL} alt="profileIcon" />
+            <img className="sm:h-10" src={user?.photoURL || ""} alt="profileIcon" />
             <button className=" font-bold text-white z-7 text-xl" onClick={handleSignOut}>
               Sign out{" "}
             </button>
