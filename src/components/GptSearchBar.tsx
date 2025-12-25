@@ -8,14 +8,15 @@ import type { AppDispatch, RootState } from "../utilis/appStore";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const langKey = useSelector((store:RootState) => store.config.lang);
-  const searchText = useRef(null);
-  const gptQuery =
-    "Act as a movie reccomendation system and suggest some movies for the query" +
-    searchText?.current?.value +
-    ". only give me 5 movies name ,,separated by commas like the example resut ahead> Examole result : Gadar, Sholay, Don, Koi mil gya, Golmaal ";
+  const langKey = useSelector((store: RootState) => store.config.lang);
+  const searchText = useRef<HTMLInputElement>(null);
 
   const getGroqChatCompletion = () => {
+    const gptQuery =
+      "Act as a movie reccomendation system and suggest some movies for the query" +
+      searchText?.current?.value +
+      ". only give me 5 movies name ,,separated by commas like the example resut ahead> Examole result : Gadar, Sholay, Don, Koi mil gya, Golmaal ";
+
     return groq.chat.completions.create({
       messages: [
         {
@@ -30,16 +31,16 @@ const GptSearchBar = () => {
   const handleGptSearchCLick = async () => {
     const chatCompletion = await getGroqChatCompletion();
     //  console.log(chatCompletion.choices[0]?.message?.content || "");
-    const gptMovies = chatCompletion.choices[0]?.message?.content?.split(",");
+    const gptMovies = chatCompletion.choices[0]?.message?.content?.split(",").map((m) => m.trim());
 
     const promiseArray = gptMovies?.map((movie) => searchMovieTMDB(movie));
     const tmdbResults = await Promise.all(promiseArray);
-    dispatch(addGptMoviesResult({ moviesName : gptMovies, moviesResult : tmdbResults}));
-    
+    dispatch(addGptMoviesResult({ moviesName: gptMovies, moviesResult: tmdbResults }));
+
     console.log(tmdbResults);
   };
 
-  const searchMovieTMDB = async (movie) => {
+  const searchMovieTMDB = async (movie: string) => {
     const data = await fetch("https://api.themoviedb.org/3/search/movie?query=" + movie + "&include_adult=false&language=en-US&page=1", API_OPTIONS);
     const json = await data.json();
 
