@@ -34,7 +34,13 @@ const GptSearchBar = () => {
     const chatCompletion = await getGroqChatCompletion();
     //  console.log(chatCompletion.choices[0]?.message?.content || "");
     const gptMovies = chatCompletion.choices[0]?.message?.content?.split(",").map((m) => m.trim());
+  console.log(gptMovies);
+   const searchMovieTMDB = async (movie: string) => {
+    const data = await fetch('https://api.themoviedb.org/3/search/' + movie + '?include_adult=false&language=en-US&page=1', API_OPTIONS);
+    const json = await data.json();
 
+    return json.results;
+  };
     const promiseArray = gptMovies?.map((movie) => searchMovieTMDB(movie));
     if (!promiseArray) return;
     const tmdbResults = await Promise.all(promiseArray);
@@ -43,12 +49,7 @@ const GptSearchBar = () => {
     console.log(tmdbResults);
   };
 
-  const searchMovieTMDB = async (movie: string) => {
-    const data = await fetch("https://api.themoviedb.org/3/search/movie?query=" + movie + "&include_adult=false&language=en-US&page=1", API_OPTIONS);
-    const json = await data.json();
-
-    return json.results;
-  };
+ 
 
   return (
     <div className="pt-[40%] md:pt-[10%] flex justify-center">
