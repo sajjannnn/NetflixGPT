@@ -36,7 +36,7 @@ const GptSearchBar = () => {
     const gptMovies = chatCompletion.choices[0]?.message?.content?.split(",").map((m) => m.trim());
   console.log(gptMovies);
    const searchMovieTMDB = async (movie: string) => {
-    const data = await fetch('https://api.themoviedb.org/3/search/' + movie + '?include_adult=false&language=en-US&page=1', API_OPTIONS);
+    const data = await fetch('https://api.themoviedb.org/3/search/movie?query='+ movie, API_OPTIONS);
     const json = await data.json();
 
     return json.results;
@@ -52,7 +52,7 @@ const GptSearchBar = () => {
  
 
   return (
-    <div className="pt-[40%] md:pt-[10%] flex justify-center">
+    <div className=" pt-[180px] sm:pt-[320px] md:pt-[140px] flex justify-center">
       <form className="w-full md:w-1/2 bg-black grid grid-cols-12  p-4 sm:p-6" onSubmit={(e) => e.preventDefault()}>
         <input type="text" className="p-1 sm:p-4 sm:m-4 col-span-9 bg-gray-600 text-white" placeholder={lang[langKey].gptSearchPlaceholder} ref={searchText} />
         <button className="col-span-3  sm:m-4 py-2 px-4 bg-red-700 text-white sm:rounded-lg" onClick={handleGptSearchCLick}>
